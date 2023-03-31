@@ -4,219 +4,506 @@
     <meta name="description" content="Instance Hosted by Stux.Cloud">
     <meta content='width=device-width, initial-scale=1.0' name='viewport'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="https://media.stux.cloud/icon.png" />
+    <link rel="icon" type="image/png" href="https://media.stux.cloud/global/icon.png" />
     <style>
-        html, body {
-            height: 100%;
-            overflow: hidden; 
+        * {
+            box-sizing: border-box; 
         }
-        .error-page {
+
+        :root {
+            --block-background: #555;
+            --block-border: 1px solid #000;
+            --block-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+            --block-light-background: linear-gradient(to right, #2579ba 0%, #0089f2 26%, #214db2 50%, #010023 51%, #0d0e19 100%);
+            --block-light-border: 5px solid; 
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+            min-height: 450px;
+            background: #fff;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center; 
+        }
+        main #wrap {
+            width: 300px;
+            height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: relative; 
+        }
+        main #wrap .line {
+            position: absolute;
+            left: 0;
+            top: 33%;
+            width: 100%; 
+        }
+        main #wrap .line.line-1 {
+            animation: anim-line1 5s 0s ease forwards; 
+        }
+        main #wrap .line.line-1 .ball {
+            animation-delay: 0; 
+        }
+        main #wrap .line.line-2 {
+            animation: anim-line2 5s 1.2s ease forwards; 
+        }
+        main #wrap .line.line-2 .ball {
+            animation-delay: 1.2s; 
+        }
+        main #wrap .line.line-3 {
+            animation: anim-line3 5s 2.4s ease forwards; 
+        }
+        main #wrap .line.line-3 .ball {
+            animation-delay: 2.4s; 
+        }
+        main #wrap .ball {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: #000;
+            color: #fff;
             text-align: center;
-            height: 100%;
+            line-height: 40px;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 'Source Code Pro', monospace;
+            z-index: 2;
+            animation: anim-ball 5s ease forwards; 
+        }
+        main #wrap .hand {
+            position: absolute;
+            top: 50%;
             width: 100%;
-            font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+            transform-origin: 50% 0; 
         }
-        .error-page h1 {
-            font-size: clamp(3rem, 6vw, 20vw);
-            font-weight: bold;
-            position: relative;
-            margin: -8vh 0 0;
-            padding: 0;
-            text-transform: capitalize;
+        main #wrap .hand.hand-left {
+            left: 6px;
+            animation: anim-hand-left 5s 0s ease forwards; 
         }
-        .error-page h1:after {
-            content: attr(data-h1);
+        main #wrap .hand .hand-part {
+            height: 2px;
+            width: 30px;
+            background: #000;
+            position: absolute; 
+        }
+        main #wrap .hand .hand-part.part-bottom {
+            top: -10px;
+            left: 0;
+            height: 20px;
+            border-radius: 7px;
+            background: #ccc;
+            border-bottom: 4px solid #000; 
+        }
+        main #wrap .hand .hand-part.part-middle {
+            left: 26px;
+            top: -10px;
+            transform: rotate(-40deg); 
+        }
+        main #wrap .hand .hand-part.part-top {
+            left: 45px;
+            top: -32px;
+            transform: rotate(-60deg); 
+        }
+        main #wrap .hand.hand-right {
+            right: 6px;
+            animation: anim-hand-left 5s 0.5s ease forwards; 
+        }
+        main #wrap .hand.hand-right .part-bottom {
+            left: auto;
+            right: 0; 
+        }
+        main #wrap .hand.hand-right .part-middle {
+            left: auto;
+            right: 26px;
+            transform: rotate(40deg);
+        }
+        main #wrap .hand.hand-right .part-top {
+            left: auto;
+            right: 45px;
+            transform: rotate(60deg); 
+        }
+        main #server {
+            width: 150px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 3px solid #1C1000;
+            padding-bottom: 2%;
+            background: #1C1000;
+            position: relative; 
+        }
+        main #server .eye {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            color: transparent;
-            /* webkit only for graceful degradation to IE */
-            background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 400%;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.25);
-            animation: animateTextBackground 10s ease-in-out infinite;
+            top: -12px;
+            width: 20px;
+            height: 25px;
+            border: 1px solid #000;
+            box-shadow: 0 0 0 2px #ccc;
+            background: #fff;
+            border-radius: 50%; 
         }
-        .error-page p {
-            color: #d6d6d6;
-            font-size: clamp(3rem, 3vw, 10vw);
-            font-weight: bold;
-            position: relative;
-        }
-
-        .error-page p:after {
-            content: attr(data-p);
+        main #server .eye span {
+            display: block;
+            width: 50%;
+            height: 50%;
+            border: 1px solid;
+            border-radius: 50%;
+            background: #000;
             position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
-            color: transparent;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-            -webkit-background-clip: text;
-            -moz-background-clip: text;
-            background-clip: text;
+            top: 1px;
+            animation: anim-eyes 8s ease forwards; 
+        }
+        main #server .eye.eye-left {
+            left: 30px; 
+        }
+        main #server .eye.eye-right {
+            right: 30px; 
+        }
+        main #server .block {
+            border: var(--block-border);
+            height: 11%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--block-shadow);
+            background: var(--block-background); 
+        }
+        main #server .block .light {
+            width: calc(100% - 4px);
+            height: 12px;
+            border-bottom: var(--block-light-border);
+            background: var(--block-light-background); 
+        }
+        main #server #bottom-block {
+            height: 30%;
+            border: var(--block-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--block-background);
+            box-shadow: var(--block-shadow);
+            overflow: hidden;
+            position: relative; 
+        }
+        main #server #bottom-block #bottom-light {
+            width: 2vw;
+            height: 2vw;
+            min-width: 14px;
+            min-height: 14px;
+            border-radius: 4px;
+            background: #fff;
+            border: 2px solid #ccc;
+            box-shadow: var(--block-shadow);
+            z-index: 2; 
+        }
+        main #server #bottom-block .bottom-line {
+            width: calc(100% - 4px);
+            height: 3px;
+            background: #fff;
+            position: absolute;
+            border-bottom: 2px solid #ccc; 
+        }
+        main .text {
+            padding: 10px;
+            min-width: 320px;
+            text-align: center; 
+        }
+        main .text h1 {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 1vw 0; 
         }
 
-        #particles-js {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-
-        @keyframes animateTextBackground {
-            0% {
-                background-position: 0 0; 
+        @keyframes anim-ball {
+            20% {
+                transform: rotate(180deg); 
             }
-            25% {
-                background-position: 100% 0;
+            40% {
+                transform: rotate(0deg); 
             }
-            50% {
-                background-position: 100% 100%;
+            60% {
+                transform: rotate(180deg); 
             }
-            75% {
-                background-position: 0 100%;
+            80% {
+                transform: rotate(0deg); 
             }
             100% {
-                background-position: 0 0;
-            }
+                transform: rotate(-90deg); 
+            } 
         }
 
-        @media (max-width: 767px) {
-            .error-page h1 {
-
+        @keyframes anim-line1 {
+            20% {
+                transform: rotate(180deg); 
             }
-            .error-page h1 + p {
+            40% {
+                transform: rotate(0deg); 
             }
+            60% {
+                transform: rotate(180deg); 
+            }
+            80% {
+                transform: rotate(0deg); 
+            }
+            100% {
+                transform: rotate(90deg) translateY(40px); 
+            } 
         }
 
-        a.back {
-            position: fixed;
-            right: 40px;
-            bottom: 40px;
-            background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176);
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 24px;
-            padding: 15px 30px;
-            text-decoration: none;
-            transition: 0.25s all ease-in-out;
+        @keyframes anim-line2 {
+            20% {
+                transform: rotate(180deg); 
+            }
+            40% {
+                transform: rotate(0deg); 
+            }
+            60% {
+                transform: rotate(180deg); 
+            }
+            80% {
+                transform: rotate(0deg); 
+            }
+            100% {
+                transform: rotate(90deg) translateY(0px); 
+            } 
         }
-        a.back:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+        @keyframes anim-line3 {
+            20% {
+                transform: rotate(180deg); 
+            }
+            40% {
+                transform: rotate(0deg); 
+            }
+            60% {
+                transform: rotate(180deg); 
+            }
+            80% {
+                transform: rotate(0deg); 
+            }
+            100% {
+                transform: rotate(90deg) translateY(-40px); 
+            } 
+        }
+
+        @keyframes anim-line4 {
+            20% {
+                transform: rotate(180deg); }
+            40% {
+                transform: rotate(0deg); }
+            60% {
+                transform: rotate(180deg); }
+            80% {
+                transform: rotate(0deg); }
+            100% {
+                transform: rotate(90deg) translateY(-60px); 
+            } 
+        }
+
+        @keyframes anim-hand-left {
+            10% {
+                transform: rotate(3deg); 
+            }
+            15% {
+                transform: rotate(0deg); 
+            }
+            25% {
+                transform: rotate(3deg); 
+            }
+            30% {
+                transform: rotate(0deg); 
+            }
+            40% {
+                transform: rotate(3deg); 
+            }
+            45% {
+                transform: rotate(0deg); 
+            }
+            50% {
+                transform: rotate(3deg); 
+            }
+            55% {
+                transform: rotate(0deg); 
+            }
+            65% {
+                transform: rotate(3deg); 
+            }
+            70% {
+                transform: rotate(0deg); 
+            }
+            80% {
+                transform: rotate(3deg);
+            }
+            85% {
+                transform: rotate(0deg); 
+            }
+            95% {
+                transform: rotate(3deg); 
+            }
+            100% {
+                transform: rotate(0deg); 
+            } 
+        }
+
+        @keyframes anim-hand-right {
+            10% {
+                transform: rotate(-3deg); 
+            }
+            15% {
+                transform: rotate(0deg); 
+            }
+            25% {
+                transform: rotate(-3deg); 
+            }
+            30% {
+                transform: rotate(0deg); 
+            }
+            40% {
+                transform: rotate(-3deg); 
+            }
+            45% {
+                transform: rotate(0deg); 
+            }
+            50% {
+                transform: rotate(-3deg); 
+            }
+            55% {
+                transform: rotate(0deg); 
+            }
+            65% {
+                transform: rotate(-3deg); 
+            }
+            70% {
+                transform: rotate(0deg);
+            }
+            80% {
+                transform: rotate(-3deg); 
+            }
+            85% {
+                transform: rotate(0deg); 
+            }
+            100% {
+                transform: rotate(0deg); 
+            } 
+        }
+
+        @keyframes anim-eyes {
+            25% {
+                left: 10px; 
+            }
+            50% {
+                left: 0; 
+            }
+            75% {
+                top: 0;
+                left: 10px; 
+            }
+            100% {
+                top: 7px;
+                left: 5px; 
+            } 
+        }
+
+        #page-region, #page-address, #admin-email {
+            text-transform: uppercase;
+            background: linear-gradient(to right, #2579ba 0%, #0089f2 50%, #214db2 100%);
+            color: white;
+            padding-left: 5px;
+            padding-right: 5px;
         }
     </style>
 </head>
 <body>
-<div class="error-page">
-    <div>
-        <!--h1(data-h1='400') 400-->
-        <!--p(data-p='BAD REQUEST') BAD REQUEST-->
-        <!--h1(data-h1='401') 401-->
-        <!--p(data-p='UNAUTHORIZED') UNAUTHORIZED-->
-        <!--h1(data-h1='403') 403-->
-        <!--p(data-p='FORBIDDEN') FORBIDDEN-->
-        <h1 class="text-effect" data-h1="Stux.Cloud" id="page-url">Stux.Cloud</h1>
-        <p class="text-effect" data-p="Instance Hosted by Stux.Cloud">Instance Hosted by Stux.Cloud</p>
-        <p class="text-effect" id="support-email" style="font-size: clamp(1rem, 1.4vw, 3vw); color: #8d1b1b;" data-p="Email admin@stux.cloud with any issues">Email admin@stux.cloud with any issues</p>
-        <!--h1(data-h1='500') 500-->
-        <!--p(data-p='SERVER ERROR') SERVER ERROR-->
-    </div>
-</div>
-<div id="particles-js"></div>
-<script>
-    <!--var $pageurl = window.location.href.replace(/https?:\/\//i, "")-->
-    var $pageurl = window.location.host;
-    <!--$pageurl = "test1.servers.uk.stux.cloud";-->
-    /*const words = $pageurl.split(".");
-
-    for (let i = 0; i < words.length; i++) {
-        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    }
-    $pageurl = words.join(".");*/
-    document.getElementById('page-url').innerHTML = $pageurl;
-    document.getElementById('page-url').setAttribute("data-h1", $pageurl);
-    document.title = $pageurl;
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-<script>
-particlesJS("particles-js", {
-    "particles": {
-        "number": {
-            "value": 5,
-            "density": {
-                "enable": true,
-                "value_area": 800
+    <main>
+        <div class="text">
+            <h1>Hi I'm</h1>
+            <div style="padding-bottom: 40px;"></div>
+        </div>
+        
+        <div id="wrap">
+            <div class="hand hand-left">
+                <span class='hand-part part-top'></span>
+                <span class='hand-part part-middle'></span>
+                <span class='hand-part part-bottom'></span>
+            </div>
+            <div class="hand hand-right">
+                <span class='hand-part part-top'></span>
+                <span class='hand-part part-middle'></span>
+                <span class='hand-part part-bottom'></span>
+            </div>
+            <div class='line line-1'>
+                <div class="ball">Z</div>
+            </div>
+            <div class='line line-2'>
+                <div class="ball">A</div>
+            </div>
+            <div class='line line-3'>
+                <div class="ball">K</div>
+            </div>
+            <!--<div class='line line-4'>
+                <div class="ball">k</div>
+            </div>-->
+            <div id="server">
+                <div class="eye eye-left"><span></span></div>
+                <div class="eye eye-right"><span></span></div>
+                <div class="block">
+                    <div class="light"></div>
+                </div>
+                <div class="block">
+                                <div class="light"></div>
+                </div>
+                <div class="block">
+                                <div class="light"></div>
+                </div>
+                <div class="block">
+                                <div class="light"></div>
+                </div>
+                <div class="block">
+                                <div class="light"></div>
+                </div>
+                <div id="bottom-block">
+                    <div class="bottom-line"></div>
+                    <div id="bottom-light"></div>
+                </div>
+            </div>    
+        </div>
+        
+        <div class="text">
+            <h1>I exist throughout the entire Stux.Cloud.</h1>
+            <h1>Looks like you found one of my servers.</h1>
+            <h1>Let's see...</h1>
+            <h1>This server is located in the <span id="page-region">unknown</span> region</h1>
+            <h1>The address for this server is</h1>
+            <h1><span id="page-address" style="text-transform: uppercase">unknown</span></h1>
+            <h1>Feel free to contact me at <span id="admin-email">ZAK@Stux.Cloud</span></h1>
+        </div>
+    </main>
+    <script>
+        <!--var $pageaddress = window.location.href.replace(/https?:\/\//i, "")-->
+        var $pageaddress = window.location.host;
+        $pageaddress = "test1.servers.uk.stux.cloud";
+        $pageaddress = "stux.cloud";
+        $pageregion = "unknown";
+            if($pageaddress != "") {
+            const words = $pageaddress.split(".");
+            if(words[2]) {
+                $pageregion = words[2];
             }
-        },
-        "color": {
-            "value": "#fcfcfc"
-        },
-        "shape": {
-            "type": "circle",
-        },
-        "opacity": {
-            "value": 0.5,
-            "random": true,
-            "anim": {
-                "enable": false,
-                "speed": 1,
-                "opacity_min": 0.2,
-                "sync": false
-            }
-        },
-        "size": {
-            "value": 140,
-            "random": false,
-            "anim": {
-                "enable": true,
-                "speed": 10,
-                "size_min": 40,
-                "sync": false
-            }
-        },
-        "line_linked": {
-            "enable": false,
-        },
-        "move": {
-            "enable": true,
-            "speed": 8,
-            "direction": "none",
-            "random": false,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {
-                "enable": false,
-                "rotateX": 600,
-                "rotateY": 1200
-            }
-            }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": false
-            },
-            "onclick": {
-                "enable": false
-            },
-            "resize": true
+            /*for (let i = 0; i < words.length; i++) {
+                words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+            }*/
+            //$pageaddress = words.join(".");
+            document.getElementById('page-region').innerHTML = $pageregion;
+            document.getElementById('page-address').innerHTML = $pageaddress;
+            document.title = $pageaddress;
         }
-    },
-    "retina_detect": true
-});
-</script>
-<!--a(href="#").back GO BACK-->
+    </script>
 </body>
 </html>
