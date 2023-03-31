@@ -489,12 +489,18 @@
         <!--var $pageaddress = window.location.href.replace(/https?:\/\//i, "")-->
         var $pageaddress = window.location.host;
         //$pageaddress = "test1.servers.uk.stux.cloud";
+        //$pageaddress = "instancepage.stux.cloud";
         //$pageaddress = "stux.cloud";
-        $pageregion = "unknown";
+        var $pageregion = "unknown";
         if($pageaddress != "") {
             const words = $pageaddress.split(".");
-            if(words[2]) {
-                $pageregion = words[2];
+            var word = words[words.length - 3];
+            console.log(word);
+            if(word == "instancepage") {
+                $pageaddress = "unknown";
+            }
+            if(word != undefined) {
+                $pageregion = word;
             }
             /*for (let i = 0; i < words.length; i++) {
                 words[i] = words[i][0].toUpperCase() + words[i].substr(1);
