@@ -497,6 +497,7 @@
             var word = words[words.length - 3];
             if(word != undefined && word != "instancepage") {
                 $pageregion = word;
+                //document.title = $pageaddress;
             } else {
                 $pageaddress = "unknown";
             }
@@ -506,7 +507,6 @@
             //$pageaddress = words.join(".");
             document.getElementById('page-region').innerHTML = $pageregion;
             document.getElementById('page-address').innerHTML = $pageaddress;
-            document.title = $pageaddress;
         }
     </script>
 </body>
