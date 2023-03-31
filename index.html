@@ -493,16 +493,12 @@
             //$pageaddress = "instancepage.stux.cloud";
             //$pageaddress = "stux.cloud";
             var $pageregion = "unknown";
-            console.log($pageaddress);
             if($pageaddress != "") {
                 const words = $pageaddress.split(".");
                 var word = words[words.length - 3];
-                console.log(word);
-                if(word != undefined && word != "instancepage") {
+                if(word != undefined) {
                     $pageregion = word;
                     //document.title = $pageaddress;
-                } else {
-                    $pageaddress = "unknown";
                 }
                 /*for (let i = 0; i < words.length; i++) {
                     words[i] = words[i][0].toUpperCase() + words[i].substr(1);
