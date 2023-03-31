@@ -487,28 +487,30 @@
     </main>
     <script>
         <!--var $pageaddress = window.location.href.replace(/https?:\/\//i, "")-->
-        var $pageaddress = window.parent.location.host;
-        //$pageaddress = "test1.servers.uk.stux.cloud";
-        //$pageaddress = "instancepage.stux.cloud";
-        //$pageaddress = "stux.cloud";
-        var $pageregion = "unknown";
-		console.log($pageaddress);
-        if($pageaddress != "") {
-            const words = $pageaddress.split(".");
-            var word = words[words.length - 3];
-			console.log(word);
-            if(word != undefined && word != "instancepage") {
-                $pageregion = word;
-                //document.title = $pageaddress;
-            } else {
-                $pageaddress = "unknown";
+        if(parent !== window) {
+            var $pageaddress = new URL(document.referrer).hostname;
+            //$pageaddress = "test1.servers.uk.stux.cloud";
+            //$pageaddress = "instancepage.stux.cloud";
+            //$pageaddress = "stux.cloud";
+            var $pageregion = "unknown";
+            console.log($pageaddress);
+            if($pageaddress != "") {
+                const words = $pageaddress.split(".");
+                var word = words[words.length - 3];
+                console.log(word);
+                if(word != undefined && word != "instancepage") {
+                    $pageregion = word;
+                    //document.title = $pageaddress;
+                } else {
+                    $pageaddress = "unknown";
+                }
+                /*for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                }*/
+                //$pageaddress = words.join(".");
+                document.getElementById('page-region').innerHTML = $pageregion;
+                document.getElementById('page-address').innerHTML = $pageaddress;
             }
-            /*for (let i = 0; i < words.length; i++) {
-                words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-            }*/
-            //$pageaddress = words.join(".");
-            document.getElementById('page-region').innerHTML = $pageregion;
-            document.getElementById('page-address').innerHTML = $pageaddress;
         }
     </script>
 </body>
