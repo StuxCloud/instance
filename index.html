@@ -495,12 +495,10 @@
         if($pageaddress != "") {
             const words = $pageaddress.split(".");
             var word = words[words.length - 3];
-            console.log(word);
-            if(word == "instancepage") {
-                $pageaddress = "unknown";
-            }
-            if(word != undefined) {
+            if(word != undefined && word != "instancepage") {
                 $pageregion = word;
+            } else {
+                $pageaddress = "unknown";
             }
             /*for (let i = 0; i < words.length; i++) {
                 words[i] = words[i][0].toUpperCase() + words[i].substr(1);
