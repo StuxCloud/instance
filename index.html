@@ -487,11 +487,12 @@
     </main>
     <script>
         <!--var $pageaddress = window.location.href.replace(/https?:\/\//i, "")-->
-        var $pageaddress = window.location.host;
+        var $pageaddress = window.parent.location.host;
         //$pageaddress = "test1.servers.uk.stux.cloud";
         //$pageaddress = "instancepage.stux.cloud";
         //$pageaddress = "stux.cloud";
         var $pageregion = "unknown";
+		console.log($pageaddress);
         if($pageaddress != "") {
             const words = $pageaddress.split(".");
             var word = words[words.length - 3];
